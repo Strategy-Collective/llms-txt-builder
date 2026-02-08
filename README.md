@@ -1,23 +1,22 @@
-# LLMS File Builder 🧠📄
+# LLMS File Builder
 
 > Transform your Screaming Frog SEO crawls into AI-optimized LLMS.txt files for enhanced discoverability on ChatGPT, Claude, Perplexity, and other AI search engines.
 
 [![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![OpenAI](https://img.shields.io/badge/OpenAI-GPT--3.5-orange.svg)](https://openai.com/)
 
-## 🎯 Why LLMS.txt?
+## Why LLMS.txt?
 
 AI search engines are increasingly used for finding businesses and services. An LLMS.txt file helps these AI systems understand your website's structure and content, similar to how robots.txt helps traditional search engines. This tool automates the creation of these files from your existing SEO crawl data, with built-in AI optimization for maximum discoverability.
 
-## 🏗️ Architecture
+## Architecture
 
 ```mermaid
 graph TB
     subgraph "Input"
         A[Screaming Frog CSV Export] --> B[CSV Processor]
     end
-    
+
     subgraph "Processing Pipeline"
         B --> C{Validation}
         C -->|Valid| D[Filter & Clean]
@@ -27,12 +26,12 @@ graph TB
         G --> H[AI Content Optimizer]
         H --> I[LLMS Generator]
     end
-    
+
     subgraph "Output"
         I --> L[LLMS.txt]
         L --> N[AI Search Engines]
     end
-    
+
     style A fill:#e1f5fe
     style L fill:#c8e6c9
     style N fill:#fff3e0
@@ -42,24 +41,24 @@ graph TB
 
 | Component | Purpose | Key Features |
 |-----------|---------|--------------|
-| **CSV Processor** | Validates and cleans Screaming Frog exports | • Filters non-content pages<br>• Quality scoring<br>• Duplicate removal |
-| **Categorizer** | Groups pages into logical sections | • Pattern-based matching<br>• Medical/healthcare focus<br>• Built-in AI enhancement |
-| **LLMS Generator** | Creates final output file | • Markdown formatting<br>• AI-optimized content<br>• Validation |
-| **Streamlit App** | User-friendly interface | • Drag-and-drop upload<br>• Real-time preview<br>• Quality analysis |
+| **CSV Processor** | Validates and cleans Screaming Frog exports | Filters non-content pages, quality scoring, duplicate removal |
+| **Categorizer** | Groups pages into logical sections | Pattern-based matching, medical/healthcare focus, AI-enhanced descriptions |
+| **LLMS Generator** | Creates final LLMS.txt output | Markdown formatting, AI-optimized content, validation |
+| **Streamlit App** | Password-protected web interface | Drag-and-drop upload, real-time preview, quality analysis |
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
 - Python 3.8+
 - Screaming Frog SEO Spider (for crawling websites)
-- OpenAI API key (optional, for enhanced descriptions)
+- OpenAI API key (**required** for AI-enhanced descriptions)
 
 ### Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/llms-file-builder.git
+git clone https://github.com/reallyreallyryan/llms-file-builder.git
 cd llms-file-builder
 
 # Create virtual environment
@@ -73,13 +72,28 @@ source .venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
-
-# Set up environment variables
-cp .env.example .env
-# Edit .env and add your OpenAI API key (optional)
 ```
 
-## 📖 Usage Guide
+### API Key Setup
+
+The OpenAI API key is **required**. Set it up using one of these methods:
+
+**Method 1 — Streamlit secrets (recommended for the web interface):**
+
+```bash
+mkdir -p .streamlit
+echo 'OPENAI_API_KEY = "sk-..."' >> .streamlit/secrets.toml
+echo 'app_password = "your-password"' >> .streamlit/secrets.toml
+```
+
+**Method 2 — Environment file (for CLI usage):**
+
+```bash
+cp .env.example .env
+# Edit .env and add your OpenAI API key
+```
+
+## Usage Guide
 
 ### Step 1: Export from Screaming Frog
 
@@ -88,8 +102,8 @@ cp .env.example .env
 1. Open Screaming Frog SEO Spider
 2. Crawl your website
 3. Click the **"Internal"** tab
-4. Use the **Filter dropdown → Select "HTML"**
-5. Go to **File → Export** → Save as CSV
+4. Use the **Filter dropdown -> Select "HTML"**
+5. Go to **File -> Export** -> Save as CSV
 
 ### Step 2: Generate LLMS.txt
 
@@ -104,9 +118,17 @@ python run.py data/your-crawl.csv --preview
 
 # Custom output filename
 python run.py data/your-crawl.csv --output mysite_llms
+
+# Validate CSV quality without processing
+python run.py data/your-crawl.csv --validate-only
+
+# Force processing even if CSV quality is poor
+python run.py data/your-crawl.csv --force
 ```
 
 #### Option B: Web Interface
+
+The web interface is password-protected. Set `app_password` in `.streamlit/secrets.toml` before launching.
 
 ```bash
 # Launch the Streamlit app
@@ -115,11 +137,15 @@ streamlit run app.py
 # Then open http://localhost:8501 in your browser
 ```
 
+#### Option C: Dev Container (GitHub Codespaces / VS Code)
+
+A dev container is included for quick setup. Open the project in GitHub Codespaces or VS Code with the Dev Containers extension — dependencies install automatically and the Streamlit app launches on port 8501.
+
 ### Step 3: Deploy LLMS.txt
 
 Place the generated `LLMS.txt` file in your website's root directory (e.g., `https://yoursite.com/llms.txt`)
 
-## ⚙️ Configuration
+## Configuration
 
 ### Default Category Patterns
 
@@ -152,7 +178,7 @@ CUSTOM_PATTERNS = {
 categorizer.update_patterns(CUSTOM_PATTERNS)
 ```
 
-## 🎨 Output Format
+## Output Format
 
 ### LLMS.txt Structure
 
@@ -172,8 +198,7 @@ categorizer.update_patterns(CUSTOM_PATTERNS)
 - [Article Title](https://site.com/blog/article): Key insights and topics covered
 ```
 
-
-## 🤖 Built-in AI Enhancement
+## Built-in AI Enhancement
 
 The tool automatically:
 
@@ -182,14 +207,14 @@ The tool automatically:
 3. **Optimizes** content specifically for LLMS.txt format
 4. **Maximizes** discoverability in ChatGPT, Claude, Perplexity, and other AI search engines
 
-### GPT Optimization Focus
+### AI Optimization Focus
 
 - **Services**: Emphasizes solutions and outcomes
-- **Providers**: Highlights expertise and specializations  
+- **Providers**: Highlights expertise and specializations
 - **Locations**: Includes accessibility and service availability
 - **Blog**: Focuses on educational value and key takeaways
 
-## 📊 Quality Assurance
+## Quality Assurance
 
 The tool includes comprehensive quality checks:
 
@@ -207,17 +232,17 @@ The tool includes comprehensive quality checks:
 - **Improves** empty descriptions
 - **Validates** output structure
 
-## 🛠️ API Reference
+## API Reference
 
 ### LLMSProcessor
 
 ```python
 from backend import LLMSProcessor
 
-# Initialize processor with built-in AI optimization
+# Initialize processor (AI optimization is always enabled)
 processor = LLMSProcessor(
     output_dir="exports",
-    api_key="your-api-key"  # Optional, uses env var by default
+    api_key="your-api-key"  # Uses env var by default
 )
 
 # Process file
@@ -251,8 +276,8 @@ result = processor.process_file(
 ```python
 from backend import Categorizer
 
-# Categorization with built-in AI optimization
-categorizer = Categorizer()  # AI enhancement is always enabled
+# AI enhancement is always enabled
+categorizer = Categorizer()
 categorizer.update_patterns({
     "Custom Category": ["pattern1", "pattern2"]
 })
@@ -264,22 +289,19 @@ categorized = categorizer.categorize_pages(
 )
 ```
 
-## 🧪 Testing
+## Testing
 
-Run the test suite to verify your setup:
+There is no formal test suite yet. To verify your setup works correctly:
 
 ```bash
-# Basic setup test
-python test_setup.py
+# Validate a CSV file without processing
+python run.py data/your-crawl.csv --validate-only
 
-# Run all tests (coming soon)
-pytest tests/
-
-# Test with sample data
-python run.py data/test/test_crawl.csv --preview
+# Preview output without saving
+python run.py data/your-crawl.csv --preview
 ```
 
-## 🚧 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -287,7 +309,7 @@ python run.py data/test/test_crawl.csv --preview
 |-------|----------|
 | **Too many non-content files** | Re-export with HTML filter in Screaming Frog |
 | **Missing columns error** | Ensure you're exporting from the "Internal" tab |
-| **GPT timeout** | Process in smaller batches or disable GPT enhancement |
+| **API key error** | Verify your OpenAI API key is set in `.env` or `.streamlit/secrets.toml` |
 | **Empty descriptions** | Check if meta descriptions exist in your crawl |
 
 ### Debug Mode
@@ -298,25 +320,7 @@ export LOG_LEVEL=DEBUG
 python run.py data/crawl.csv
 ```
 
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Development Setup
-
-```bash
-# Install dev dependencies
-pip install -r requirements-dev.txt
-
-# Run linters
-black backend/
-pylint backend/
-
-# Run type checking
-mypy backend/
-```
-
-## 📈 Roadmap
+## Roadmap
 
 - [ ] Multi-language support
 - [ ] Custom industry templates
@@ -326,22 +330,21 @@ mypy backend/
 - [ ] Chrome extension
 - [ ] Advanced analytics dashboard
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is MIT licensed.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - OpenAI for GPT-3.5 API
 - Screaming Frog for the excellent SEO Spider tool
 - The LLMS.txt specification creators
 
-## 💬 Support
+## Support
 
-- **Documentation**: [Full docs](https://docs.llmsfilebuilder.com)
 - **Issues**: [GitHub Issues](https://github.com/reallyreallyryan/llms-file-builder/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/reallyreallyryan/llms-file-builder/discussions)
 
 ---
 
-Made with ❤️ for the AI-first web by Ryan K
+Made with care for the AI-first web by Ryan K

@@ -9,8 +9,8 @@ The LLMS File Builder follows a **modular pipeline architecture** with clear sep
 │   Input Layer   │     │ Processing Core │     │  Output Layer   │
 ├─────────────────┤     ├─────────────────┤     ├─────────────────┤
 │ • CSV Files     │ --> │ • Validation    │ --> │ • LLMS.txt      │
-│ • User Config   │     │ • Filtering     │     │ • LLMS.json     │
-│ • API Keys      │     │ • Categorization│     │ • Preview       │
+│ • User Config   │     │ • Filtering     │     │ • Preview       │
+│ • API Keys      │     │ • Categorization│     │                 │
 └─────────────────┘     └─────────────────┘     └─────────────────┘
 ```
 
@@ -52,7 +52,7 @@ class Categorizer:
     """
     Two-phase approach:
     1. Pattern-based categorization (primary)
-    2. GPT enhancement for descriptions (optional)
+    2. GPT enhancement for descriptions (mandatory)
     """
 ```
 
@@ -162,12 +162,8 @@ generator = LLMSGenerator()
 ### 2. **Strategy Pattern** - Categorization
 
 ```python
-# Interchangeable categorization strategies
-if use_gpt:
-    strategy = GPTEnhancedStrategy()
-else:
-    strategy = PatternBasedStrategy()
-
+# Pattern-based categorization with mandatory AI enhancement
+strategy = GPTEnhancedStrategy()  # Always uses AI-enhanced descriptions
 categorizer.set_strategy(strategy)
 ```
 
@@ -242,7 +238,7 @@ Operation Level
 2. **Non-Recoverable Errors**
    - Missing required columns → Fail with guidance
    - Invalid file format → Fail with instructions
-   - No API key for GPT mode → Fail with setup help
+   - No API key → Fail with setup instructions
 
 ## Extension Points
 
@@ -343,7 +339,7 @@ if parsed.scheme not in ['http', 'https']:
 ```python
 logger.info("Processing started", extra={
     "csv_size": file_size,
-    "use_gpt": use_gpt,
+    "ai_enhanced": True,
     "timestamp": datetime.now()
 })
 ```
